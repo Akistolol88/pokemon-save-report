@@ -1,0 +1,20 @@
+plugins {
+    // Shared convention plugins for the Java toolchain and static analysis.
+    id 'lnu.java-conventions'
+    id 'lnu.quality-conventions'
+
+    // Packages and runs the application.
+    id 'application'
+}
+
+group = 'se.lnu.savereport'
+version = '1.0.0'
+
+application {
+    mainClass = 'se.lnu.savereport.App'
+}
+
+dependencies {
+    implementation project(':savechecker')
+    implementation 'com.github.Robert060615:svg-charts-module:v1.0.1'
+}

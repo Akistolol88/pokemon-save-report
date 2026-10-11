@@ -1,0 +1,25 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+dependencyResolutionManagement {
+    // Enforces centralized repository declaration; prevents subprojects from
+    // overriding or injecting unapproved third-party repositories.
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
+    repositories {
+        mavenCentral()
+        // Hosts the svg-charts module, which is built from its GitHub repo.
+        maven { url = 'https://jitpack.io' }
+    }
+}
+
+rootProject.name = 'pokemon-save-report'
+
+include("app", "savechecker")
+
+// Composite build: pulls in the custom build logic and convention plugins.
+includeBuild("build-logic")
