@@ -2,8 +2,6 @@ package se.lnu.savereport;
 
 import java.util.List;
 import se.lnu.rm222xi.svgcharts.BarChart;
-import se.lnu.rm222xi.svgcharts.ChartOptions;
-import se.lnu.rm222xi.svgcharts.LineChart;
 
 public class App {
     public static void main(String[] args) {
