@@ -1,14 +1,13 @@
 package se.lnu.savereport;
 
-import java.util.List;
-import se.lnu.rm222xi.svgcharts.BarChart;
+import se.lnu.savechecker.SaveFile;
 
 public class App {
-    public static void main(String[] args) {
-        BarChart barChart = new BarChart();
-        barChart.setTitle("Party levels");
-        barChart.setLabels(List.of("Bulbasaur", "Charmander", "Squirtle"));
-        barChart.setValues(List.of(6.0, 5.0, 4.0));
-        System.out.println(barChart.toSvg());
+    public static void main(String[] args) throws Exception {
+        final String testSavePath = "../savechecker/src/test/resources/saves/Yellow/Yellow_Random_01.srm";
+        SaveFileLoader loader = new SaveFileLoader();
+        SaveFile saveFile = loader.load(testSavePath);
+
+        System.out.println(saveFile.getTrainer().getName());
     }
 }
