@@ -8,11 +8,12 @@ public class App {
         final String testSavePath = "../savechecker/src/test/resources/saves/Yellow/Yellow_Random_01.srm";
         SaveFileLoader loader = new SaveFileLoader();
         SaveFile saveFile = loader.load(testSavePath);
-
-        String html = "<h1>" + saveFile.getTrainer().getName() + "</h1>";
+        HtmlReportBuilder htmlBuilder = new HtmlReportBuilder();
+        String html = htmlBuilder.buildHtmlReport(saveFile);
         ReportFileWriter writer = new ReportFileWriter();
         Path reportFile = writer.write(html);
 
         System.out.println("Report written to " + reportFile);
     }
 }
+
