@@ -1,6 +1,7 @@
 package se.lnu.savereport;
 
 import se.lnu.savechecker.Badge;
+import se.lnu.savechecker.Party;
 import se.lnu.savechecker.PartyPokemon;
 import se.lnu.savechecker.PokedexStatus;
 import se.lnu.savechecker.SaveFile;
@@ -35,7 +36,7 @@ public final class HtmlReportBuilder {
 
         html.append(buildTrainerSection(saveFile.getTrainer()));
         html.append(buildPokedexSection(saveFile.getPokedexStatus()));
-        html.append(buildPartySection(saveFile));
+        html.append(buildPartySection(saveFile.getParty()));
         // Browsers draw <svg> directly inside the page, so the charts go in as they are.
         html.append(levelChart);
         for (String evChart : evCharts) {
@@ -68,7 +69,7 @@ public final class HtmlReportBuilder {
     }
 
     /** One table row per party Pokémon, with its stats, EVs and IVs (R6-R9). */
-    private String buildPartySection(SaveFile saveFile) {
+    private String buildPartySection(Party party) {
         StringBuilder html = new StringBuilder();
         html.append("<h2>Party</h2>\n<table border=\"1\">\n")
             .append(tableRow("th", "Nickname", "Level", "Experience",
@@ -76,7 +77,7 @@ public final class HtmlReportBuilder {
                 "HP EV", "Attack EV", "Defense EV", "Speed EV", "Special EV",
                 "Attack IV", "Defense IV", "Speed IV", "Special IV"));
 
-        for (PartyPokemon pokemon : saveFile.getParty().getPokemon()) {
+        for (PartyPokemon pokemon : party.getPokemon()) {
             html.append(tableRow("td", pokemon.getNickname(),
                 pokemon.getLevel(), pokemon.getExperience(),
                 pokemon.getMaxHp(), pokemon.getAttack(), pokemon.getDefense(),

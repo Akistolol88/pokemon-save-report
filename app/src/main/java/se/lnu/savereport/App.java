@@ -1,6 +1,7 @@
 package se.lnu.savereport;
 
 import se.lnu.savechecker.InvalidSaveFileException;
+import se.lnu.savechecker.Party;
 import se.lnu.savechecker.SaveFile;
 
 import java.io.IOException;
@@ -78,9 +79,9 @@ public class App {
      */
     private Path createReport(String savePath) throws IOException, InvalidSaveFileException {
         SaveFile saveFile = loader.load(savePath);
-
-        String levelChart = chartBuilder.buildLevelChart(saveFile.getParty());
-        List<String> evCharts = chartBuilder.buildEvCharts(saveFile.getParty());
+        Party party = saveFile.getParty();
+        String levelChart = chartBuilder.buildLevelChart(party);
+        List<String> evCharts = chartBuilder.buildEvCharts(party);
 
         String html = htmlBuilder.buildHtmlReport(saveFile, levelChart, evCharts);
         return writer.write(html);
