@@ -10,8 +10,9 @@ import se.lnu.savechecker.PartyPokemon;
 /**
  * Builds the charts for the report as SVG text, using the svg-charts module.
  *
- * <p>Given: the party from the save file. Gives back: SVG strings. This is the
- * only class that knows about svg-charts.
+ * <p>Given: the party from the save file. Gives back: SVG strings, or a short
+ * "no EVs yet" note where an EV chart would be empty. This is the only class
+ * that knows about svg-charts.
  */
 public final class ChartBuilder {
 
@@ -38,7 +39,7 @@ public final class ChartBuilder {
      * Builds an EV chart for every Pokémon in the party, in party order (R11).
      *
      * @param party the party from the save file
-     * @return one SVG chart per Pokémon
+     * @return one entry per Pokémon: an SVG chart, or a "no EVs yet" note
      */
     public List<String> buildEvCharts(Party party) {
         List<String> evCharts = new ArrayList<>();
@@ -53,11 +54,17 @@ public final class ChartBuilder {
      *
      * <p>These are Generation 1 EVs ("stat experience"), so each one goes from
      * 0 to 65535. A Pokémon that has never won a battle has 0 in all five.
+     * Then a short note is returned instead, because svg-charts draws an
+     * empty chart with a 0 to 1 axis, which looks like a bug.
      *
      * @param pokemon the Pokémon to draw the chart for
-     * @return the chart as SVG text, titled with the Pokémon's nickname
+     * @return the chart as SVG text, titled with the Pokémon's nickname, or a
+     *     {@code <p>} "no EVs yet" note if all five EVs are 0
      */
     private String buildEvChart(PartyPokemon pokemon) {
+        if (hasNoEvs(pokemon)) {
+            return "<p>" + pokemon.getNickname() + ": no EVs yet</p>\n";
+        }
         // The labels and values must be in the same order: label 1 goes with value 1.
         return buildBarChart(pokemon.getNickname(),
                 List.of("HP", "Attack", "Defense", "Speed", "Special"),
@@ -84,5 +91,19 @@ public final class ChartBuilder {
         chart.setLabels(labels);
         chart.setValues(values);
         return chart.toSvg();
+    }
+
+    /**
+     * Checks if all five EVs of a Pokémon are 0, so there is nothing to draw.
+     *
+     * @param pokemon the Pokémon to check
+     * @return {@code true} if the Pokémon has no EVs at all
+     */
+    private boolean hasNoEvs(PartyPokemon pokemon) {
+        return pokemon.getHpEv() == 0
+        && pokemon.getAttackEv() == 0
+        && pokemon.getDefenseEv() == 0
+        && pokemon.getSpeedEv() == 0
+        && pokemon.getSpecialEv() == 0;
     }
 }

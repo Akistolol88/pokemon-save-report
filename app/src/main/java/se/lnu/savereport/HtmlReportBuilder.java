@@ -23,7 +23,8 @@ public final class HtmlReportBuilder {
      *
      * @param saveFile the loaded save file to describe
      * @param levelChart the party level chart as SVG text
-     * @param evCharts one EV chart per party Pokémon as SVG text, in party order
+     * @param evCharts one entry per party Pokémon, in party order: an EV chart
+     *     as SVG text, or a "no EVs yet" note as HTML
      * @return the report as one HTML string
      */
     public String buildHtmlReport(SaveFile saveFile, String levelChart, List<String> evCharts) {
@@ -36,7 +37,8 @@ public final class HtmlReportBuilder {
         html.append(buildTrainerSection(saveFile.getTrainer()));
         html.append(buildPokedexSection(saveFile.getPokedexStatus()));
         html.append(buildPartySection(saveFile.getParty()));
-        // Browsers draw <svg> directly inside the page, so the charts go in as they are.
+        // Browsers draw <svg> directly inside the page, so the charts (and the
+        // "no EVs yet" notes, which are already HTML) go in as they are.
         html.append(levelChart);
         for (String evChart : evCharts) {
             html.append(evChart);
@@ -95,6 +97,7 @@ public final class HtmlReportBuilder {
      *
      * @param cellTag {@code "th"} for a header row, {@code "td"} for a data row
      * @param cells the values to put in the row, in order
+     * @return the row as HTML, ending with a line break
      */
     private String buildTableRow(String cellTag, Object... cells) {
         StringBuilder row = new StringBuilder("<tr>");
