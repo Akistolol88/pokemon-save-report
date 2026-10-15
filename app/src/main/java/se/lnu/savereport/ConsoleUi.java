@@ -51,4 +51,14 @@ public final class ConsoleUi {
     public void showReportWritten(Path reportFile) {
         System.out.println("Report written to " + reportFile);
     }
+
+    /**
+     * Tells the user that something went wrong, so they can try again
+     * (R12, R13).
+     *
+     * @param message what went wrong, in words the user understands
+     */
+    public void showError(String message) {
+        System.out.println(message);
+    }
 }
