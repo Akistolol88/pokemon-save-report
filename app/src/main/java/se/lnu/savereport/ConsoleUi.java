@@ -11,8 +11,14 @@ import java.util.Scanner;
  * screen.
  */
 public final class ConsoleUi {
+
+    /** Reads what the user types. Created once and reused for every question. */
     private final Scanner keyboard = new Scanner(System.in);
 
+    /**
+     * Prints what the app does and how to use it: type a save file path to get
+     * a report, or {@code quit} to close the app (R1).
+     */
     public void showWelcomeMessage() {
         System.out.println("=== Pokémon Save Report ===");
         System.out.println("Turns a Pokémon Red, Blue or Yellow save file (.sav or .srm) into a");
@@ -27,11 +33,21 @@ public final class ConsoleUi {
         System.out.println();
     }
 
+    /**
+     * Asks for the path to a save file and waits until the user presses Enter.
+     *
+     * @return exactly what the user typed, which can also be {@code quit}
+     */
     public String askForSavePath() {
         System.out.print("Save file path (or quit): ");
         return keyboard.nextLine();
     }
 
+    /**
+     * Tells the user where the finished report was saved (R2).
+     *
+     * @param reportFile the path of the report file that was written
+     */
     public void showReportWritten(Path reportFile) {
         System.out.println("Report written to " + reportFile);
     }
