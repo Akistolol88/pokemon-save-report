@@ -72,13 +72,13 @@ public final class HtmlReportBuilder {
     private String buildPartySection(Party party) {
         StringBuilder html = new StringBuilder();
         html.append("<h2>Party</h2>\n<table border=\"1\">\n")
-            .append(tableRow("th", "Nickname", "Level", "Experience",
+            .append(buildTableRow("th", "Nickname", "Level", "Experience",
                 "Max HP", "Attack", "Defense", "Speed", "Special",
                 "HP EV", "Attack EV", "Defense EV", "Speed EV", "Special EV",
                 "Attack IV", "Defense IV", "Speed IV", "Special IV"));
 
         for (PartyPokemon pokemon : party.getPokemon()) {
-            html.append(tableRow("td", pokemon.getNickname(),
+            html.append(buildTableRow("td", pokemon.getNickname(),
                 pokemon.getLevel(), pokemon.getExperience(),
                 pokemon.getMaxHp(), pokemon.getAttack(), pokemon.getDefense(),
                 pokemon.getSpeed(), pokemon.getSpecial(),
@@ -97,7 +97,7 @@ public final class HtmlReportBuilder {
      * @param cellTag {@code "th"} for a header row, {@code "td"} for a data row
      * @param cells the values to put in the row, in order
      */
-    private String tableRow(String cellTag, Object... cells) {
+    private String buildTableRow(String cellTag, Object... cells) {
         StringBuilder row = new StringBuilder("<tr>");
         for (Object cell : cells) {
             row.append("<").append(cellTag).append(">")

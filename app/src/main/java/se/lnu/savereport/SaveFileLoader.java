@@ -18,15 +18,14 @@ public final class SaveFileLoader {
     /**
      * Reads the file at the given path and checks that it is a real save file.
      *
-     * @param savefile the path to the save file, as the user typed it
+     * @param path the path to the save file, as the user typed it
      * @return the loaded save file
      * @throws IOException if the file does not exist or cannot be read
      * @throws InvalidSaveFileException if the file is not a valid Pokémon Red,
      *     Blue or Yellow save
      */
-    public SaveFile load(String savefile) throws IOException, InvalidSaveFileException {
-        byte[] bytes = Files.readAllBytes(Path.of(savefile));
-        SaveFile saveFile = new SaveFile(bytes);
-        return saveFile;
+    public SaveFile load(String path) throws IOException, InvalidSaveFileException {
+        byte[] bytes = Files.readAllBytes(Path.of(path));
+        return new SaveFile(bytes);
     }
 }
