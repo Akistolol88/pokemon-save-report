@@ -21,7 +21,7 @@ public final class HtmlReportBuilder {
      * @param saveFile the loaded save file to describe
      * @return the report as one HTML string
      */
-    public String buildHtmlReport(SaveFile saveFile) {
+    public String buildHtmlReport(SaveFile saveFile, String levelChart) {
         StringBuilder html = new StringBuilder();
         html.append("<!DOCTYPE html>\n<html>\n<head>\n")
             .append("<meta charset=\"UTF-8\">\n")
@@ -31,6 +31,7 @@ public final class HtmlReportBuilder {
         html.append(buildTrainerSection(saveFile.getTrainer()));
         html.append(buildPokedexSection(saveFile.getPokedexStatus()));
         html.append(buildPartySection(saveFile));
+        html.append(levelChart);
 
         html.append("</body>\n</html>\n");
         return html.toString();

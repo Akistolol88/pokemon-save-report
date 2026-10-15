@@ -8,8 +8,13 @@ public class App {
         final String testSavePath = "../savechecker/src/test/resources/saves/Yellow/Yellow_Random_01.srm";
         SaveFileLoader loader = new SaveFileLoader();
         SaveFile saveFile = loader.load(testSavePath);
+
+        ChartBuilder chartBuilder = new ChartBuilder();
+        String levelChart = chartBuilder.buildLevelChart(saveFile.getParty());
+
         HtmlReportBuilder htmlBuilder = new HtmlReportBuilder();
-        String html = htmlBuilder.buildHtmlReport(saveFile);
+        String html = htmlBuilder.buildHtmlReport(saveFile, levelChart);
+
         ReportFileWriter writer = new ReportFileWriter();
         Path reportFile = writer.write(html);
 
