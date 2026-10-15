@@ -12,6 +12,9 @@ import java.util.Scanner;
  */
 public final class ConsoleUi {
 
+    /** What the user types to close the app. */
+    private static final String QUIT_COMMAND = "quit";
+
     /** Reads what the user types. Created once and reused for every question. */
     private final Scanner keyboard = new Scanner(System.in);
 
@@ -29,7 +32,7 @@ public final class ConsoleUi {
         System.out.println("  - Type the path to a save file and press Enter.");
         System.out.println("    The report is saved as report/report.html. Open it in a browser.");
         System.out.println("  - After each report you can enter another save file.");
-        System.out.println("  - Type quit and press Enter to close the app.");
+        System.out.println("  - Type " + QUIT_COMMAND + " and press Enter to close the app.");
         System.out.println();
     }
 
@@ -39,7 +42,7 @@ public final class ConsoleUi {
      * @return exactly what the user typed, which can also be {@code quit}
      */
     public String askForSavePath() {
-        System.out.print("Save file path (or quit): ");
+        System.out.print("Save file path (or " + QUIT_COMMAND + "): ");
         return keyboard.nextLine();
     }
 
@@ -60,5 +63,16 @@ public final class ConsoleUi {
      */
     public void showError(String message) {
         System.out.println(message);
+    }
+
+    /**
+     * Checks if the user wants to close the app. Spaces around the word and
+     * upper or lower case do not matter, so {@code " Quit "} also counts (R14).
+     *
+     * @param input what the user typed
+     * @return {@code true} if the input is the quit command
+     */
+    public boolean isQuitCommand(String input) {
+        return input.trim().equalsIgnoreCase(QUIT_COMMAND);
     }
 }

@@ -45,7 +45,7 @@ public class App {
 
         while (true) {
             String savePath = consoleUi.askForSavePath();
-            if (savePath.equals("quit")) {
+            if (consoleUi.isQuitCommand(savePath)) {
                 break;
             }
             try {
