@@ -6,21 +6,29 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        final String testSavePath = "../savechecker/src/test/resources/saves/Yellow/Yellow_Random_01.srm";
+        ConsoleUi consoleUi = new ConsoleUi();
         SaveFileLoader loader = new SaveFileLoader();
-        SaveFile saveFile = loader.load(testSavePath);
-
         ChartBuilder chartBuilder = new ChartBuilder();
-        String levelChart = chartBuilder.buildLevelChart(saveFile.getParty());
-        List<String> evCharts = chartBuilder.buildEvCharts(saveFile.getParty());
-
         HtmlReportBuilder htmlBuilder = new HtmlReportBuilder();
-        String html = htmlBuilder.buildHtmlReport(saveFile, levelChart, evCharts);
-
         ReportFileWriter writer = new ReportFileWriter();
-        Path reportFile = writer.write(html);
 
-        System.out.println("Report written to " + reportFile);
+        consoleUi.showWelcomeMessage();
+
+        while (true) {
+            String savePath = consoleUi.askForSavePath();
+            if (savePath.equals("quit")) {
+                break;
+            }
+
+            SaveFile saveFile = loader.load(savePath);
+
+            String levelChart = chartBuilder.buildLevelChart(saveFile.getParty());
+            List<String> evCharts = chartBuilder.buildEvCharts(saveFile.getParty());
+
+            String html = htmlBuilder.buildHtmlReport(saveFile, levelChart, evCharts);
+            Path reportFile = writer.write(html);
+
+            consoleUi.showReportWritten(reportFile);
+        }
     }
 }
-
