@@ -26,41 +26,12 @@ public final class ChartBuilder {
         List<String> pokemonNicknames = new ArrayList<>();
         List<Double> pokemonLevels = new ArrayList<>();
 
-        BarChart levelChart = new BarChart();
-        levelChart.setTitle("Level Chart");
-
         for (PartyPokemon pokemon : party.getPokemon()) {
             pokemonNicknames.add(pokemon.getNickname());
             // svg-charts only takes Double values, and getLevel() gives an int.
             pokemonLevels.add((double) pokemon.getLevel());
         }
-        levelChart.setLabels(pokemonNicknames);
-        levelChart.setValues(pokemonLevels);
-        return levelChart.toSvg();
-    }
-
-    /**
-     * Builds one bar chart with the five EVs of a single Pokémon (R11).
-     *
-     * <p>These are Generation 1 EVs ("stat experience"), so each one goes from
-     * 0 to 65535. A Pokémon that has never won a battle has 0 in all five.
-     *
-     * @param pokemon the Pokémon to draw the chart for
-     * @return the chart as SVG text, titled with the Pokémon's nickname
-     */
-    private String buildEvChart(PartyPokemon pokemon) {
-        BarChart evChart = new BarChart();
-        evChart.setTitle(pokemon.getNickname());
-        // The labels and values must be in the same order: label 1 goes with value 1.
-        evChart.setLabels(List.of("HP", "Attack", "Defense", "Speed", "Special"));
-        evChart.setValues(List.of(
-                (double) pokemon.getHpEv(),
-                (double) pokemon.getAttackEv(),
-                (double) pokemon.getDefenseEv(),
-                (double) pokemon.getSpeedEv(),
-                (double) pokemon.getSpecialEv()));
-
-        return evChart.toSvg();
+        return buildBarChart("Level Chart", pokemonNicknames, pokemonLevels);
     }
 
     /**
@@ -75,5 +46,43 @@ public final class ChartBuilder {
             evCharts.add(buildEvChart(pokemon));
         }
         return evCharts;
+    }
+
+    /**
+     * Builds one bar chart with the five EVs of a single Pokémon (R11).
+     *
+     * <p>These are Generation 1 EVs ("stat experience"), so each one goes from
+     * 0 to 65535. A Pokémon that has never won a battle has 0 in all five.
+     *
+     * @param pokemon the Pokémon to draw the chart for
+     * @return the chart as SVG text, titled with the Pokémon's nickname
+     */
+    private String buildEvChart(PartyPokemon pokemon) {
+        // The labels and values must be in the same order: label 1 goes with value 1.
+        return buildBarChart(pokemon.getNickname(),
+                List.of("HP", "Attack", "Defense", "Speed", "Special"),
+                List.of(
+                        (double) pokemon.getHpEv(),
+                        (double) pokemon.getAttackEv(),
+                        (double) pokemon.getDefenseEv(),
+                        (double) pokemon.getSpeedEv(),
+                        (double) pokemon.getSpecialEv()));
+    }
+
+    /**
+     * Builds a bar chart with svg-charts. Every chart in the report goes
+     * through here, so this is the only place that uses {@link BarChart}.
+     *
+     * @param title the text shown above the chart
+     * @param labels the name under each bar
+     * @param values the height of each bar, in the same order as the labels
+     * @return the chart as SVG text
+     */
+    private String buildBarChart(String title, List<String> labels, List<Double> values) {
+        BarChart chart = new BarChart();
+        chart.setTitle(title);
+        chart.setLabels(labels);
+        chart.setValues(values);
+        return chart.toSvg();
     }
 }
