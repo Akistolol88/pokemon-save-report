@@ -1,14 +1,13 @@
 package se.lnu.savereport;
 
+import java.util.List;
+
 import se.lnu.savechecker.Badge;
 import se.lnu.savechecker.Party;
 import se.lnu.savechecker.PartyPokemon;
 import se.lnu.savechecker.PokedexStatus;
 import se.lnu.savechecker.SaveFile;
 import se.lnu.savechecker.Trainer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Builds the HTML text for the whole report: trainer, badges, party and

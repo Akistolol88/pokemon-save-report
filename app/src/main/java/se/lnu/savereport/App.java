@@ -1,14 +1,14 @@
 package se.lnu.savereport;
 
-import se.lnu.savechecker.InvalidSaveFileException;
-import se.lnu.savechecker.Party;
-import se.lnu.savechecker.SaveFile;
-
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.List;
+
+import se.lnu.savechecker.InvalidSaveFileException;
+import se.lnu.savechecker.Party;
+import se.lnu.savechecker.SaveFile;
 
 /**
  * Starts the app and runs the main loop: ask for a save file, build its
@@ -18,7 +18,7 @@ import java.util.List;
  * {@link ConsoleUi}, {@link SaveFileLoader}, {@link ChartBuilder},
  * {@link HtmlReportBuilder} and {@link ReportFileWriter}.
  */
-public class App {
+public final class App {
     private final ConsoleUi consoleUi = new ConsoleUi();
     private final SaveFileLoader loader = new SaveFileLoader();
     private final ChartBuilder chartBuilder = new ChartBuilder();
