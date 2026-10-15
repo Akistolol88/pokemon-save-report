@@ -6,6 +6,9 @@ import se.lnu.savechecker.PokedexStatus;
 import se.lnu.savechecker.SaveFile;
 import se.lnu.savechecker.Trainer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Builds the HTML text for the whole report: trainer, badges, party and
  * charts.
@@ -21,7 +24,7 @@ public final class HtmlReportBuilder {
      * @param saveFile the loaded save file to describe
      * @return the report as one HTML string
      */
-    public String buildHtmlReport(SaveFile saveFile, String levelChart) {
+    public String buildHtmlReport(SaveFile saveFile, String levelChart, List<String> evCharts) {
         StringBuilder html = new StringBuilder();
         html.append("<!DOCTYPE html>\n<html>\n<head>\n")
             .append("<meta charset=\"UTF-8\">\n")
@@ -32,8 +35,11 @@ public final class HtmlReportBuilder {
         html.append(buildPokedexSection(saveFile.getPokedexStatus()));
         html.append(buildPartySection(saveFile));
         html.append(levelChart);
+        for (String evChart : evCharts) {
+            html.append(evChart);
+        }
 
-        html.append("</body>\n</html>\n");
+        html.append("</body>\n</html>\n");  
         return html.toString();
     }
 

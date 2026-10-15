@@ -20,7 +20,7 @@ public final class ChartBuilder {
 
         BarChart levelChart = new BarChart();
         levelChart.setTitle("Level Chart");
-        
+
         for (PartyPokemon pokemon : party.getPokemon()) {
             pokemonNicknames.add(pokemon.getNickname());
             pokemonLevels.add((double) pokemon.getLevel());
@@ -28,5 +28,26 @@ public final class ChartBuilder {
         levelChart.setLabels(pokemonNicknames);
         levelChart.setValues(pokemonLevels);
         return levelChart.toSvg();
+    }
+
+    private String buildEvChart(PartyPokemon pokemon) {
+        BarChart evChart = new BarChart();
+        evChart.setTitle(pokemon.getNickname());
+        evChart.setLabels(List.of("HP", "Attack", "Defense", "Speed", "Special"));
+        evChart.setValues(List.of(
+                (double) pokemon.getHpEv(),
+                (double) pokemon.getAttackEv(),
+                (double) pokemon.getDefenseEv(),
+                (double) pokemon.getSpeedEv(),
+                (double) pokemon.getSpecialEv()));
+
+        return evChart.toSvg();
+    }
+    public List<String> buildEvCharts(Party party) {
+        List<String> evCharts = new ArrayList<>();
+        for (PartyPokemon pokemon : party.getPokemon()) {
+            evCharts.add(buildEvChart(pokemon));
+        }
+        return evCharts;
     }
 }

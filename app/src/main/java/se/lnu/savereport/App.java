@@ -2,6 +2,7 @@ package se.lnu.savereport;
 
 import se.lnu.savechecker.SaveFile;
 import java.nio.file.Path;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -11,9 +12,10 @@ public class App {
 
         ChartBuilder chartBuilder = new ChartBuilder();
         String levelChart = chartBuilder.buildLevelChart(saveFile.getParty());
+        List<String> evCharts = chartBuilder.buildEvCharts(saveFile.getParty());
 
         HtmlReportBuilder htmlBuilder = new HtmlReportBuilder();
-        String html = htmlBuilder.buildHtmlReport(saveFile, levelChart);
+        String html = htmlBuilder.buildHtmlReport(saveFile, levelChart, evCharts);
 
         ReportFileWriter writer = new ReportFileWriter();
         Path reportFile = writer.write(html);
