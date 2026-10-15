@@ -33,15 +33,19 @@ everything up in the game, and it shows the EVs and IVs, which the game never te
 - **R7.** The report shows, for each Pokémon in the party, its stats: max HP, Attack, Defense,
   Speed and Special.
 - **R8.** The report shows, for each Pokémon in the party, its EVs: HP, Attack, Defense, Speed and
-  Special.
+  Special. In Generation 1 these are called stat experience and go from 0 to 65535, so the report
+  labels them "Stat Exp" and explains the range.
 - **R9.** The report shows, for each Pokémon in the party, its IVs: Attack, Defense, Speed and
   Special.
+- **R15.** The report shows how many Pokémon species the trainer has seen and caught in the
+  Pokédex.
 
 ### Charts
 
 - **R10.** The report contains a bar chart of the level of each Pokémon in the party, with one bar
   per Pokémon labelled with its nickname.
-- **R11.** The report contains, for each Pokémon in the party, a bar chart of its five EVs.
+- **R11.** The report contains, for each Pokémon in the party, a bar chart of its five EVs. If all
+  five EVs are 0, the report shows the text "no EVs yet" instead of an empty chart.
 
 ### Errors
 

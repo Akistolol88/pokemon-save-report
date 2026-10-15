@@ -39,7 +39,8 @@ public final class HtmlReportBuilder {
         html.append(buildPartySection(saveFile.getParty()));
         // Browsers draw <svg> directly inside the page, so the charts (and the
         // "no EVs yet" notes, which are already HTML) go in as they are.
-        html.append(levelChart);
+        html.append("<h2>Levels</h2>\n").append(levelChart);
+        html.append("<h2>Stat Exp (EVs) per Pokémon</h2>\n");
         for (String evChart : evCharts) {
             html.append(evChart);
         }
@@ -62,7 +63,7 @@ public final class HtmlReportBuilder {
         return html.toString();
     }
 
-    /** How many species the trainer has seen and caught. */
+    /** How many species the trainer has seen and caught (R15). */
     private String buildPokedexSection(PokedexStatus pokedex) {
         return "<h2>Pokédex</h2>\n"
             + "<p>Seen: " + pokedex.getSeenCount() + "</p>\n"
@@ -75,7 +76,8 @@ public final class HtmlReportBuilder {
         html.append("<h2>Party</h2>\n<table border=\"1\">\n")
             .append(buildTableRow("th", "Nickname", "Level", "Experience",
                 "Max HP", "Attack", "Defense", "Speed", "Special",
-                "HP EV", "Attack EV", "Defense EV", "Speed EV", "Special EV",
+                "HP Stat Exp", "Attack Stat Exp", "Defense Stat Exp",
+                "Speed Stat Exp", "Special Stat Exp",
                 "Attack IV", "Defense IV", "Speed IV", "Special IV"));
 
         for (PartyPokemon pokemon : party.getPokemon()) {
@@ -88,7 +90,9 @@ public final class HtmlReportBuilder {
                 pokemon.getAttackIv(), pokemon.getDefenseIv(),
                 pokemon.getSpeedIv(), pokemon.getSpecialIv()));
         }
-        html.append("</table>\n");
+        html.append("</table>\n")
+            // Gen 1 EVs look far too high to players who know the later games (max 252).
+            .append("<p>Stat Exp is how Generation 1 stores EVs. Each one goes from 0 to 65535.</p>\n");
         return html.toString();
     }
 

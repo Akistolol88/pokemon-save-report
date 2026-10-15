@@ -32,7 +32,7 @@ public final class ChartBuilder {
             // svg-charts only takes Double values, and getLevel() gives an int.
             pokemonLevels.add((double) pokemon.getLevel());
         }
-        return buildBarChart("Level Chart", pokemonNicknames, pokemonLevels);
+        return buildBarChart("Party levels", pokemonNicknames, pokemonLevels);
     }
 
     /**
@@ -101,9 +101,9 @@ public final class ChartBuilder {
      */
     private boolean hasNoEvs(PartyPokemon pokemon) {
         return pokemon.getHpEv() == 0
-        && pokemon.getAttackEv() == 0
-        && pokemon.getDefenseEv() == 0
-        && pokemon.getSpeedEv() == 0
-        && pokemon.getSpecialEv() == 0;
+                && pokemon.getAttackEv() == 0
+                && pokemon.getDefenseEv() == 0
+                && pokemon.getSpeedEv() == 0
+                && pokemon.getSpecialEv() == 0;
     }
 }
