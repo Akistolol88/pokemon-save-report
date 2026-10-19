@@ -25,9 +25,6 @@ public final class PartyPokemon {
      */
     private static final int NICKNAME_OFFSET = 0x307E;
 
-    /** How many bytes the save reserves for each nickname. */
-    private static final int NAME_MAX_BYTES = 11;
-
     /** The lowest level a Pokémon can have. */
     private static final int MIN_LEVEL = 1;
 
@@ -60,7 +57,8 @@ public final class PartyPokemon {
 
     /**
      * Where the IVs are. All four fit in 2 bytes, one half-byte each: Attack
-     * and Defense in the first byte, Speed and Special in the second.
+     * and Defense in the first byte, Speed and Special in the second. The HP
+     * IV is not stored at all, see {@link #getHpIv()}.
      */
     private static final int IV_OFFSET = 27;
 
@@ -146,17 +144,16 @@ public final class PartyPokemon {
      * Pokémon's position plus 44 for every slot before it. The nickname is
      * found the same way, but in the nickname list with 11 bytes per slot.
      *
-     * @param data the full save file as raw bytes
+     * @param reader reads the bytes of the save file
      * @param slot which party slot to read, 0 for the first Pokémon
      * @throws InvalidSaveFileException if the level or HP values are
      *     impossible, see {@link #checkValues(int)}
      */
-    PartyPokemon(byte[] data, int slot) throws InvalidSaveFileException {
+    PartyPokemon(ByteReader reader, int slot) throws InvalidSaveFileException {
         int start = PARTY_DATA_OFFSET + (slot * POKEMON_SIZE_BYTES);
-        int nicknameStart = NICKNAME_OFFSET + (slot * NAME_MAX_BYTES);
-        ByteReader reader = new ByteReader(data);
+        int nicknameStart = NICKNAME_OFFSET + (slot * TextDecoder.NAME_MAX_BYTES);
 
-        this.nickname = new TextDecoder(data).decode(nicknameStart, NAME_MAX_BYTES);
+        this.nickname = new TextDecoder(reader).decode(nicknameStart, TextDecoder.NAME_MAX_BYTES);
         this.currentHp = reader.readTwoBytes(start + CURRENT_HP_OFFSET);
         this.originalTrainerId = reader.readTwoBytes(start + OT_ID_OFFSET);
         this.experience = reader.readThreeBytes(start + EXPERIENCE_OFFSET);
@@ -300,6 +297,26 @@ public final class PartyPokemon {
      */
     public int getSpecialIv() {
         return this.specialIv;
+    }
+
+    /**
+     * Returns the HP IV (individual value). The save file does not store it:
+     * the game builds it from the other four IVs, the same way this method
+     * does.
+     *
+     * <p>Each of the other IVs adds a fixed amount if it is odd and nothing if
+     * it is even: Attack adds 8, Defense 4, Speed 2 and Special 1. For example
+     * Attack 9, Defense 6, Speed 15 and Special 4 give 8 + 0 + 2 + 0 = 10.
+     * In bits, the HP IV is the lowest bit of each IV put side by side.
+     *
+     * @return the HP IV, 0 to 15
+     */
+    public int getHpIv() {
+        // "% 2" is 1 for an odd IV and 0 for an even one.
+        return (this.attackIv % 2) * 8
+                + (this.defenseIv % 2) * 4
+                + (this.speedIv % 2) * 2
+                + (this.specialIv % 2) * 1;
     }
 
     /**

@@ -14,11 +14,15 @@ package se.lnu.savechecker;
  */
 class TextDecoder {
 
-    /** Reads the bytes of the save file the text comes from. */
-    private final ByteReader reader;
-
     /** Byte that marks the end of a name. Everything after it is ignored. */
     private static final int NAME_TEXT_END = 0x50;
+
+    /**
+     * How many bytes the save reserves for every name (player and Pokémon
+     * nicknames). This is the size of the storage, not the longest possible
+     * name: the rest is the end marker plus leftover bytes.
+     */
+    static final int NAME_MAX_BYTES = 11;
 
     /** Byte for the letter 'A'. */
     private static final int FIRST_UPPERCASE = 0x80;
@@ -35,13 +39,16 @@ class TextDecoder {
     /** Byte for a space. */
     private static final int SPACE = 0x7F;
 
+    /** Reads the bytes of the save file the text comes from. */
+    private final ByteReader reader;
+    
     /**
      * Creates a decoder for text stored in one save file.
      *
-     * @param data the full save file
+     * @param reader reads the bytes of the save file the text comes from
      */
-    TextDecoder(byte[] data) {
-        this.reader = new ByteReader(data);
+    TextDecoder(ByteReader reader) {
+        this.reader = reader;
     }
 
     /**
