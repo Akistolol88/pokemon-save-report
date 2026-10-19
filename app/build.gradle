@@ -19,6 +19,19 @@ run {
     standardInput = System.in
 }
 
+// Builds one runnable JAR (`java -jar`) that also contains the savechecker module and
+// svg-charts, so users only need Java to run it.
+jar {
+    archiveBaseName = 'pokemon-save-report'
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 dependencies {
     implementation project(':savechecker')
     implementation 'com.github.Robert060615:svg-charts-module:v1.0.1'

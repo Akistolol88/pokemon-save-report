@@ -64,16 +64,58 @@ The test cases for these requirements are in [TEST_REPORT.md](TEST_REPORT.md).
 
 ## How to run
 
-The app requires **Java 25** or later.
+You need **Java 25** or later. Check with `java -version` in a terminal. If you don't have it, you
+can download it from [Adoptium](https://adoptium.net/).
 
-Instructions for downloading and running the app will be added here with the first release.
+1. Download `pokemon-save-report-1.0.0.jar` from the
+   [latest release](https://github.com/Akistolol88/pokemon-save-report/releases/latest).
+2. Open a terminal in the folder where you saved the JAR and run:
+   ```bash
+   java -jar pokemon-save-report-1.0.0.jar
+   ```
+3. Type the path to your save file (`.sav` or `.srm`, exactly 32,768 bytes) and press Enter. The
+   path can be absolute, or relative to the folder you started the app in.
+4. The report is saved as `report/report.html` in that same folder. Open it in a browser.
+5. Enter another save file, or type `quit` to close the app.
+
+Don't have a save file? The repo has test saves in
+[`savechecker/src/test/resources/saves/`](savechecker/src/test/resources/saves/).
+
+## For developers
+
+### Project structure
+
+| Folder | What it is |
+|---|---|
+| `app/` | The application: `App` (main loop), `ConsoleUi`, `SaveFileLoader`, `ChartBuilder`, `HtmlReportBuilder`, `ReportFileWriter`. |
+| `savechecker/` | A copy of my savechecker module, version 1.1.0. Don't edit it here: change it in [its own repo](https://github.com/Akistolol88/Pokemon-Red-Blue-Savechecker-Module) and copy `savechecker/src` and `savechecker/build.gradle` back in. |
+| `build-logic/` | Shared Gradle conventions (Java version, Checkstyle, PMD, tests). |
+| `config/` | Checkstyle and PMD rules. |
+
+The other module, svg-charts, is not copied. Gradle downloads it from
+[JitPack](https://jitpack.io/#Robert060615/svg-charts-module) (version `v1.0.1`).
+
+### Build and run from source
+
+You need Java 25 and Git. Gradle is included as a wrapper (`gradlew`).
+
+```bash
+git clone https://github.com/Akistolol88/pokemon-save-report.git
+cd pokemon-save-report
+./gradlew :app:run --console=plain   # run the app (paths are relative to app/)
+./gradlew test                       # run the savechecker module's unit tests
+./gradlew check                      # tests + Checkstyle + PMD
+./gradlew :app:jar                   # build the runnable JAR in app/build/libs/
+```
+
+On Windows, use `gradlew.bat` instead of `./gradlew`.
 
 ## Built with
 
-- [Pokemon-Red-Blue-Savechecker-Module](https://github.com/Akistolol88/Pokemon-Red-Blue-Savechecker-Module),
-  my own module, which reads and validates the save file.
-- [svg-charts-module](https://github.com/Robert060615/svg-charts-module) by Robert060615, which
-  draws the charts as SVG.
+- [Pokemon-Red-Blue-Savechecker-Module](https://github.com/Akistolol88/Pokemon-Red-Blue-Savechecker-Module)
+  (version 1.1.0), my own module, which reads and validates the save file.
+- [svg-charts-module](https://github.com/Robert060615/svg-charts-module) (version v1.0.1) by
+  Robert060615, which draws the charts as SVG.
 
 ## License
 
