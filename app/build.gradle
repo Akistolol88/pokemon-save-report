@@ -27,6 +27,8 @@ jar {
         attributes 'Main-Class': application.mainClass
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    // Build savechecker's JAR first, since its classes are copied in below.
+    dependsOn configurations.runtimeClasspath
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }

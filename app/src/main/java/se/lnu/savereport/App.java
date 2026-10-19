@@ -69,8 +69,7 @@ public final class App {
                 // Thrown for text that cannot be a path at all, like a name with ? or ".
                 consoleUi.showError("Not a valid path: " + savePath);
             } catch (IOException e) {
-                // Any other file problem, such as a folder instead of a file, or
-                // the report folder not being writable.
+                // Any other file problem, such as the report folder not being writable.
                 consoleUi.showError("Could not read or write a file: " + e.getMessage());
             }
         }
