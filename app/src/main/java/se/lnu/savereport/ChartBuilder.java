@@ -2,7 +2,6 @@ package se.lnu.savereport;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import se.lnu.rm222xi.svgcharts.BarChart;
 import se.lnu.savechecker.Party;
 import se.lnu.savechecker.PartyPokemon;

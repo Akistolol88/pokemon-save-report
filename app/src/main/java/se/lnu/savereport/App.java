@@ -5,7 +5,6 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.List;
-
 import se.lnu.savechecker.InvalidSaveFileException;
 import se.lnu.savechecker.Party;
 import se.lnu.savechecker.SaveFile;
@@ -19,10 +18,20 @@ import se.lnu.savechecker.SaveFile;
  * {@link HtmlReportBuilder} and {@link ReportFileWriter}.
  */
 public final class App {
+
+    /** Talks to the user: welcome text, path prompt and messages. */
     private final ConsoleUi consoleUi = new ConsoleUi();
+
+    /** Reads a save file from disk and checks it with the savechecker module. */
     private final SaveFileLoader loader = new SaveFileLoader();
+
+    /** Builds the level chart and the EV charts as SVG text. */
     private final ChartBuilder chartBuilder = new ChartBuilder();
+
+    /** Puts the save data and the charts together into one HTML page. */
     private final HtmlReportBuilder htmlBuilder = new HtmlReportBuilder();
+
+    /** Writes the finished HTML page to the report file. */
     private final ReportFileWriter writer = new ReportFileWriter();
 
     /**

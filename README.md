@@ -39,6 +39,8 @@ everything up in the game, and it shows the EVs and IVs, which the game never te
   Special.
 - **R15.** The report shows how many Pokémon species the trainer has seen and caught in the
   Pokédex.
+- **R16.** The report shows the trainer's ID, the HP IV of each Pokémon in the party, and whether
+  each party Pokémon was traded in (its original trainer ID is not the trainer's ID).
 
 ### Charts
 

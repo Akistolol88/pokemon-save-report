@@ -3,7 +3,6 @@ package se.lnu.savereport;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import se.lnu.savechecker.InvalidSaveFileException;
 import se.lnu.savechecker.SaveFile;
 
