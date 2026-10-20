@@ -67,11 +67,11 @@ The test cases for these requirements are in [TEST_REPORT.md](TEST_REPORT.md).
 You need **Java 25** or later. Check with `java -version` in a terminal. If you don't have it, you
 can download it from [Adoptium](https://adoptium.net/).
 
-1. Download `pokemon-save-report-1.0.0.jar` from the
+1. Download `pokemon-save-report-1.0.1.jar` from the
    [latest release](https://github.com/Akistolol88/pokemon-save-report/releases/latest).
 2. Open a terminal in the folder where you saved the JAR and run:
    ```bash
-   java -jar pokemon-save-report-1.0.0.jar
+   java -jar pokemon-save-report-1.0.1.jar
    ```
 3. Type the path to your save file (`.sav` or `.srm`, exactly 32,768 bytes) and press Enter. The
    path can be absolute, or relative to the folder you started the app in.
